@@ -1,6 +1,7 @@
 import GlassCard from "../components/GlassCard";
 import profile from "../assets/new image.jpg";
 import { motion } from "framer-motion";
+import { FaDownload } from "react-icons/fa"; // Import download icon
 
 const Home = () => {
   return (
@@ -25,7 +26,7 @@ const Home = () => {
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 mb-4">
             <a href="#contact">
               <button className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 transition rounded-full font-semibold text-white shadow-md">
                 Hire Me
@@ -42,6 +43,16 @@ const Home = () => {
               </button>
             </a>
           </div>
+
+          {/* Download Resume Button */}
+          <a
+            href="/VinodhKumar_Resume.pdf" // Replace with your actual path
+            download
+            className="inline-flex items-center gap-2 px-5 py-2 border-2 border-white/20 text-white hover:text-cyan-400 hover:border-cyan-400 transition rounded-full font-semibold"
+          >
+            <FaDownload className="text-cyan-400" />
+            Download Resume
+          </a>
         </GlassCard>
       </motion.div>
 

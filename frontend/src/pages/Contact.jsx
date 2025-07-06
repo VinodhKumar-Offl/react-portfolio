@@ -8,9 +8,8 @@ import {
   FaInstagram,
   FaEnvelope,
   FaPhone,
-  FaTwitter,
 } from "react-icons/fa";
-import { SiLeetcode } from "react-icons/si";
+import { SiLeetcode, SiX } from "react-icons/si";
 
 const socialLinks = [
   {
@@ -40,8 +39,8 @@ const socialLinks = [
   },
   {
     href: "https://x.com/VkVinodhkumar",
-    label: "Twitter",
-    icon: FaTwitter,
+    label: "X (Twitter)",
+    icon: SiX,
   },
 ];
 
@@ -57,6 +56,26 @@ const Contact = () => {
 
   const scriptURL =
     "https://script.google.com/macros/s/AKfycbxb_mTZZAgmt2w8qkgLrsMAmGwVQg8C1t1CVVHU_XKiNjwLVLwp5M4hXmWBrus1y1G9/exec";
+
+  const isGibberish = (text) => {
+    const vowelCount = (text.match(/[aeiou]/gi) || []).length;
+    const consonantCluster = /[^aeiou\s]{5,}/i;
+    const repeatedChars = /(.)\1{3,}/;
+    const words = text.trim().split(/\s+/);
+    const dictionaryWords = words.filter(
+      (word) =>
+        word.length > 2 &&
+        /^[a-z]+$/i.test(word) &&
+        !consonantCluster.test(word)
+    );
+
+    return (
+      vowelCount < 5 ||
+      consonantCluster.test(text) ||
+      repeatedChars.test(text) ||
+      dictionaryWords.length < 3
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,6 +94,11 @@ const Contact = () => {
 
     if (formData.message.trim().length < 10) {
       setResponseMsg("❌ Message must be at least 10 characters.");
+      return;
+    }
+
+    if (isGibberish(formData.message)) {
+      setResponseMsg("❌ Please enter a meaningful message.");
       return;
     }
 
@@ -213,12 +237,24 @@ const Contact = () => {
             <h3 className="text-xl font-semibold mb-4 text-purple-300">Reach Me</h3>
             <div className="space-y-3 text-white/80">
               <p className="flex items-center gap-3">
-                <FaEnvelope className="text-purple-400" />
-                vinodhkumar142002@gmail.com
+                <a
+                  href="mailto:vinodhkumar142002@gmail.com"
+                  className="flex items-center gap-3 hover:text-purple-400 transition-colors"
+                  aria-label="Send email"
+                >
+                  <FaEnvelope className="text-purple-400" />
+                  vinodhkumar142002@gmail.com
+                </a>
               </p>
               <p className="flex items-center gap-3">
-                <FaPhone className="text-purple-400" />
-                +91-9944438823
+                <a
+                  href="tel:+919944438823"
+                  className="flex items-center gap-3 hover:text-purple-400 transition-colors"
+                  aria-label="Call phone number"
+                >
+                  <FaPhone className="text-purple-400" style={{ transform: "scaleX(-1)" }} />
+                  +91-9944438823
+                </a>
               </p>
             </div>
           </GlassCard>
